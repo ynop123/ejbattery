@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電瓶網站 SEO 標籤產生器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .code-box { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+        <h1 class="text-3xl font-bold mb-6 text-blue-800">🔋 電瓶網站 Meta Tag 產生器</h1>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="space-y-4">
+                <div>
+                    <label class="block font-bold">服務地區 (Local SEO)</label>
+                    <input type="text" id="area" placeholder="例如：板橋、台北、西屯" class="w-full border p-2 rounded mt-1" oninput="generateTags()">
+                </div>
+                <div>
+                    <label class="block font-bold">店名/品牌</label>
+                    <input type="text" id="shopName" placeholder="例如：極速電池專賣" class="w-full border p-2 rounded mt-1" oninput="generateTags()">
+                </div>
+                <div>
+                    <label class="block font-bold">主打品牌 (多選/填寫)</label>
+                    <input type="text" id="brands" placeholder="例如：VARTA, AMARON, 湯淺" class="w-full border p-2 rounded mt-1" oninput="generateTags()">
+                </div>
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                <h3 class="font-bold text-blue-800 mb-2">Google 搜尋結果預覽：</h3>
+                <div class="text-blue-700 text-xl font-medium truncate" id="previewTitle">請輸入資料...</div>
+                <div class="text-green-700 text-sm mb-1">https://www.your-battery-shop.com/</div>
+                <div class="text-gray-600 text-sm line-clamp-2" id="previewDesc">請輸入資料以產生描述...</div>
+            </div>
+        </div>
+
+        <h3 class="font-bold mb-2">複製以下程式碼至網站的 &lt;head&gt; 區塊：</h3>
+        <pre class="code-box text-sm overflow-x-auto" id="outputCode">
+&lt;!-- 請先在左側輸入資料 --&gt;
+        </pre>
+        
+        <button onclick="copyCode()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-bold">
+            <i class="fas fa-copy mr-2"></i> 複製程式碼
+        </button>
+    </div>
+
+    <script>
+        function generateTags() {
+            const area = document.getElementById('area').value || '[城市]';
+            const shop = document.getElementById('shopName').value || '[店名]';
+            const brands = document.getElementById('brands').value || 'VARTA, AMARON, 湯淺, 統力';
+
+            const title = `【${area}電瓶更換】汽車電池、機車電瓶專賣 | 道路救援到府安裝 - ${shop}`;
+            const desc = `專業${area}汽車電瓶更換服務，專營 ${brands} 等國際品牌。提供 AGM、EFB 啟停電池與深循環電池。${area}區域內車子發不動、電瓶沒電？一通電話到府救援安裝。`;
+            
+            // 更新預覽
+            document.getElementById('previewTitle').innerText = title;
+            document.getElementById('previewDesc').innerText = desc;
+
+            // 產生代碼
+            const code = `<title>${title}</title>
+<meta name="title" content="${title}">
+<meta name="description" content="${desc}">
+<meta name="keywords" content="${area}電瓶, ${area}換電池, 汽車電瓶, 機車電瓶, ${brands}, AGM電瓶, EFB電瓶, 道路救援接電, 到府安裝電瓶">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="https://your-website.com/og-image.jpg">
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:title" content="${title}">
+<meta property="twitter:description" content="${desc}">`;
+
+            document.getElementById('outputCode').innerText = code;
+        }
+
+        function copyCode() {
+            const code = document.getElementById('outputCode').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('代碼已複製！');
+            });
+        }
+    </script>
+</body>
+</html>
